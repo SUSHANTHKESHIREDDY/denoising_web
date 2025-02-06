@@ -1,12 +1,29 @@
-from flask import Flask, request, send_file, send_from_directory
+from flask import Flask, request, send_file, send_from_directory, render_template
 import torch
 import torch.nn as nn
 import cv2
 import numpy as np
 import os
+import requests
 from werkzeug.utils import secure_filename
-from flask import render_template
+
 app = Flask(__name__, static_folder="static")
+
+# URL of the model file on GitHub
+model_url = "https://github.com/SUSHANTHKESHIREDDY/denoising_web/raw/main/models/rednet_model_Denoise.pth"
+model_path = "models/rednet_model_Denoise.pth"
+
+# Ensure the models directory exists
+if not os.path.exists("models"):
+    os.makedirs("models")
+
+# Check if the model already exists; if not, download it
+if not os.path.exists(model_path):
+    print("Downloading model...")
+    response = requests.get(model_url)
+    with open(model_path, "wb") as f:
+        f.write(response.content)
+    print("Model downloaded successfully!")
 
 # Load the trained model (RedNet)
 class ResidualBlock(nn.Module):
@@ -42,8 +59,7 @@ class RedNet(nn.Module):
 
 # Load model
 model = RedNet(num_residual_blocks=5)
-model.load_state_dict(torch.load("C:\\Users\\keshi\\Downloads\\rednet_model_Denoise.pth"))
-
+model.load_state_dict(torch.load(model_path))
 
 model.eval()
 
@@ -62,7 +78,6 @@ def allowed_file(filename):
 UPLOAD_FOLDER = "uploads"
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
-
 
 # Function to save uploaded file
 def save_uploaded_image(uploaded_file):
