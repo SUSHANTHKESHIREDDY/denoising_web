@@ -5,7 +5,7 @@ import cv2
 import numpy as np
 import os
 from werkzeug.utils import secure_filename
-
+from flask import render_template
 app = Flask(__name__, static_folder="static")
 
 # Load the trained model (RedNet)
@@ -42,7 +42,9 @@ class RedNet(nn.Module):
 
 # Load model
 model = RedNet(num_residual_blocks=5)
-model.load_state_dict(torch.load('C:/Users/keshi/Downloads/rednet_model_All.pth'))
+model.load_state_dict(torch.load("C:\\Users\\keshi\\Downloads\\rednet_model_Denoise.pth"))
+
+
 model.eval()
 
 # Device (GPU or CPU)
@@ -57,9 +59,10 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 # Upload folder
-UPLOAD_FOLDER = "C:/Users/keshi/Downloads/res"
+UPLOAD_FOLDER = "uploads"
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
+
 
 # Function to save uploaded file
 def save_uploaded_image(uploaded_file):
@@ -71,7 +74,7 @@ def save_uploaded_image(uploaded_file):
 # ✅ Serve Frontend (HTML, CSS, JS)
 @app.route('/')
 def serve_frontend():
-    return send_from_directory(app.static_folder, 'index.html')
+    return render_template('index.html')
 
 @app.route('/<path:path>')
 def serve_static(path):

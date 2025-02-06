@@ -3,6 +3,7 @@ venv/
 *.dll
 *.lib
 *.h5
+*.pth
 *.pkl
 node_modules/
 .env
