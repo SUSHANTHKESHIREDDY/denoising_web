@@ -1,0 +1,8 @@
+venv/
+*.pyd
+*.dll
+*.lib
+*.h5
+*.pkl
+node_modules/
+.env
