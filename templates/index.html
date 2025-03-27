@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Denoising Web App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1> Image Denoising Web App</h1>
+        
+        <form id="upload-form" action="/denoise" method="POST" enctype="multipart/form-data">
+            <div class="upload-box">
+                <input type="file" id="image-input" name="image" accept="image/*" required>
+                <label for="image-input">📂 Choose an Image</label>
+            </div>
+            <button type="submit" class="upload-btn">Upload & Denoise</button>
+        </form>
+
+        <div id="preview-container">
+            <h2>Selected Image:</h2>
+            <img id="preview-image" src="" alt="Selected Image" style="display: none;">
+        </div>
+
+        <div id="result">
+            <h2>🔍 Output:</h2>
+            <img id="output-image" src="" alt="Denoised Image" style="display:none;">
+            <p id="noise-type" style="display:none;"><strong>Predicted Noise Type:</strong> <span id="noise-label"></span></p>
+            <a id="download-btn" href="#" download="denoised_image.png" style="display:none;">
+                <button class="download-btn">⬇️ Download Image</button>
+            </a>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
