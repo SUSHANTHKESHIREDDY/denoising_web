@@ -22,9 +22,9 @@ Deep Learning: RedNet for denoising, CNN-based classifier for noise detection
 
 Frontend: HTML, CSS, JavaScript
 
-Backend: Flask/Django (mention the one you're using)
+Backend: Flask
 
-Model Training: TensorFlow/PyTorch (whichever applies)
+Model Training: PyTorch 
 
 How It Works
 User uploads an image via the web interface.
